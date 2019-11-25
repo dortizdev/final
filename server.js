@@ -10,9 +10,6 @@ var mongoose = require('mongoose');
 var passport = require('passport');
 var flash    = require('connect-flash');
 
-var multer = require('multer');
-var ObjectId = require('mongodb').ObjectID
-
 var morgan       = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser   = require('body-parser');
@@ -26,7 +23,7 @@ var db
 mongoose.connect(configDB.url, (err, database) => {
   if (err) return console.log(err)
   db = database
-  require('./app/routes.js')(app, passport, db, multer, ObjectId);
+  require('./app/routes.js')(app, passport, db);
 }); // connect to our database
 
 //app.listen(port, () => {

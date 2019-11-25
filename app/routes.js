@@ -1,4 +1,4 @@
-module.exports = function(app, passport, db, multer, ObjectId) {
+module.exports = function(app, passport, db) {
 
 // normal routes ===============================================================
 
@@ -10,11 +10,10 @@ module.exports = function(app, passport, db, multer, ObjectId) {
     // PROFILE SECTION =========================
     app.get('/profile', isLoggedIn, function(req, res) {
       let userID = req.user._id
-        db.collection('list').find({personPost: userID}).toArray((err, result) => {
+        db.collection('final').find({personPost: userID}).toArray((err, result) => {
           if (err) return console.log(err)
           res.render('profile.ejs', {
             user : req.user,
-            messages: result
           })
         })
     });
@@ -25,72 +24,35 @@ module.exports = function(app, passport, db, multer, ObjectId) {
         res.redirect('/');
     });
 
-// message board routes ===============================================================
+  // all users routes ===============================================================
 
-    app.post('/list', (req, res) => {
-      console.log("user id", req.user._id)
-      db.collection('list').save({item: req.body.item, note: req.body.note, pic: req.body.pic, personPost: req.user._id}, (err, result) => {
-        if (err) return console.log(err)
-        console.log('saved to list database')
-        res.redirect('/profile')
-           })
-    })
-
-    app.delete('/list', (req, res) => {
-      db.collection('list').findOneAndDelete({item: req.body.item, note: req.body.note, personPost: req.user._id}, (err, result) => {
-        if (err) return res.send(500, err)
-        res.send('Message deleted!')
-      })
-    })
-
-    //---------------------------------------
-    // IMAGE CODE
-    //---------------------------------------
-
-    var storage = multer.diskStorage({
-        destination: (req, file, cb) => {
-          cb(null, 'public/images/uploads')
-        },
-        filename: (req, file, cb) => {
-          cb(null, file.fieldname + '-' + Date.now() + ".png")
-        }
-    });
-    var upload = multer({storage: storage});
-
-    app.post('/up', upload.single('pic'), (req, res, next) => {
-      // console.log(err)
-      insertDocuments(db, req, 'images/uploads/' + req.file.filename, () => {
-          //db.close();
-          //res.json({'message': 'File uploaded successfully'});
+  app.get('/allUsers' , function(req, res) {
+    db.collection('users').find().toArray((err, users) => {
+      if (err) return console.log(err)
+      console.log(users)
+      res.render('allUsers.ejs', {
+        allUsers: users
       });
+    })
+  })
 
-      res.redirect('/profile')
-    });
-
-    var insertDocuments = function(db, req, filePath, callback) {
-      db.collection('list').save({item: req.body.item, note: req.body.note, pic: filePath, personPost: req.user._id}, (err, result) => {
-        if (err) return console.log(err)
-        console.log('saved to list database')
-      })
-        // var collection = db.collection('users');
-        // var uId = ObjectId(req.session.passport.user)
-        // collection.findOneAndUpdate({"_id": uId}, {
-          // $set: {
-        //     profileImg: filePath
-        //   }
-        // }, {
-        //   sort: {_id: -1},
-        //   upsert: false
-        // }, (err, result) => {
-        //   if (err) return res.send(err)
-        //   callback(result)
-        // })
-        // collection.findOne({"_id": uId}, (err, result) => {
-        //     //{'imagePath' : filePath }
-        //     //assert.equal(err, null);
-        //     callback(result);
-        // });
-    }
+// z ===============================================================
+    //
+    // app.post('/list', (req, res) => {
+    //   console.log("user id", req.user._id)
+    //   db.collection('list').save({item: req.body.item, note: req.body.note, pic: req.body.pic, personPost: req.user._id}, (err, result) => {
+    //     if (err) return console.log(err)
+    //     console.log('saved to list database')
+    //     res.redirect('/profile')
+    //        })
+    // })
+    //
+    // app.delete('/list', (req, res) => {
+    //   db.collection('list').findOneAndDelete({item: req.body.item, note: req.body.note, personPost: req.user._id}, (err, result) => {
+    //     if (err) return res.send(500, err)
+    //     res.send('Message deleted!')
+    //   })
+    // })
 
 // =============================================================================
 // AUTHENTICATE (FIRST LOGIN) ==================================================
