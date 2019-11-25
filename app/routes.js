@@ -36,12 +36,13 @@ module.exports = function(app, passport, db) {
     })
   })
 
-  app.delete('/cancel', function (req, res) {
-    db.collection('users').findOneAndDelete({user: req.user._id}, (err, result) => {
-      if (err) return console.log(err)
-      res.render('index.ejs' {message: "account has been deleted"});
-    })
-  })
+  app.delete('/cancel', function(req, res) {
+    db.collection('users').deleteOne({ _id: req.user._id }, (err, result) => {
+      if (err) return res.send(500, err)
+      console.log(res)
+      res.send('user deleted!')
+    });
+  });
 
 
 // z ===============================================================
