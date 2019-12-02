@@ -26,15 +26,36 @@ module.exports = function(app, passport, db) {
 
   // all users routes ===============================================================
 
-  app.get('/allUsers' , function(req, res) {
+  app.get('/connect' , function(req, res) {
     db.collection('users').find().toArray((err, users) => {
       if (err) return console.log(err)
-      console.log(users)
-      res.render('allUsers.ejs', {
-        allUsers: users
+      //need logic to ignore currrent user
+      var randomUser = users[Math.floor(Math.random() * users.length)];
+      console.log(randomUser);
+      res.render('connect.ejs', {
+        randomUser: randomUser
       });
     })
   })
+
+  app.get('/chat', function(req, res) {
+    res.render('chat.ejs');
+  })
+
+  // app.put('/join', (req, res) => {
+  //   db.collection('users')
+  //   .findOneAndUpdate({name: req.body.name}, {
+  //     $set: {
+  //       channels: req.body.channel + 1
+  //     }
+  //   }, {
+  //     sort: {_id: -1},
+  //     upsert: true
+  //   }, (err, result) => {
+  //     if (err) return res.send(err)
+  //     res.send(result)
+  //   })
+  // })
 
   app.delete('/cancel', function(req, res) {
     db.collection('users').deleteOne({ _id: req.user._id }, (err, result) => {

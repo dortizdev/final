@@ -54,8 +54,8 @@
     </header>
     <!-- End Header Area -->
 
-    <!-- start banner Area -->
-    <section class="banner-area relative" id="home">
+    <!-- Start Banner Area -->
+    <!-- <section class="banner-area relative" id="home">
       <div class="overlay overlay-bg"></div>
       <div class="container">
           <div class="row fullscreen align-items-center justify-content-start" style="height: 915px;">
@@ -66,11 +66,15 @@
             </div>
           </div>
       </div>
-    </section>
-
+    </section> -->
+    <h1>Connect with a user</h1>
     <div class="col-sm-6">
-      <h3>New users</h3>
-
+      <div style="border: 1px solid; margin 2rem; padding: 2rem;">
+        <h2>name: <%= randomUser.local.name %></h2>
+        <h3>branch: <%= randomUser.local.branch %></h3>
+        <a class="btn btn-success" href="/chat">&#10003;</a>
+        <a class="btn btn-danger" href="/connect">&#x2717;</a>
+      </div>
     </div>
 
     <script src="js/vendor/jquery-2.2.4.min.js"></script>

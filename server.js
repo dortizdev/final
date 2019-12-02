@@ -10,6 +10,9 @@ var mongoose = require('mongoose');
 var passport = require('passport');
 var flash    = require('connect-flash');
 
+var http = require('http').createServer(app);
+var io = require('socket.io')(http);
+
 var morgan       = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser   = require('body-parser');
@@ -61,5 +64,18 @@ app.use(flash()); // use connect-flash for flash messages stored in session
 //require('./app/routes.js')(app, passport, db); // load our routes and pass in our app and fully configured passport
 
 // launch ======================================================================
-app.listen(port);
-console.log('The magic happens on port ' + port);
+io.on('connection', function(socket){
+  console.log('a user connected');
+  socket.on('chat message', function(msg){
+    console.log('message: ' + msg);
+    io.emit('chat message', msg);
+  });
+});
+
+// app.listen(port);
+
+http.listen(port, function(){
+  console.log(`listening on *${port}`);
+});
+
+// console.log('The magic happens on port ' + port);
