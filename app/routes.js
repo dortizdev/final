@@ -29,7 +29,7 @@ module.exports = function(app, passport, db) {
   app.get('/connect' , function(req, res) {
     db.collection('users').find().toArray((err, users) => {
       if (err) return console.log(err)
-      //need logic to ignore currrent user
+      //Edgecase allows currrent user to appear
       var randomUser = users[Math.floor(Math.random() * users.length)];
       console.log(randomUser);
       res.render('connect.ejs', {
