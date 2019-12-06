@@ -1,4 +1,4 @@
-module.exports = function(app, passport, db) {
+module.exports = function(app, passport, db, multer, ObjectId) {
 
 // normal routes ===============================================================
 
@@ -10,12 +10,21 @@ module.exports = function(app, passport, db) {
     // PROFILE SECTION =========================
     app.get('/profile', isLoggedIn, function(req, res) {
       let userID = req.user._id
+      db.collection("users").find({_id: userID}).toArray((err, userProfiles) => {
+        if (err) return console.log(err)
+        console.log("user = " + JSON.stringify(userProfiles))
+        res.render('profile.ejs',{
+          user: userProfiles[0]
+        })
+      })
+      /*
         db.collection('final').find({personPost: userID}).toArray((err, result) => {
           if (err) return console.log(err)
           res.render('profile.ejs', {
             user : req.user,
           })
         })
+        */
     });
 
     // LOGOUT ==============================
@@ -30,16 +39,29 @@ module.exports = function(app, passport, db) {
     db.collection('users').find().toArray((err, users) => {
       if (err) return console.log(err)
       //Edgecase allows currrent user to appear
-      var randomUser = users[Math.floor(Math.random() * users.length)];
+      var randomUser = users[Math.floor(Math.random() * (users.length))];
       console.log(randomUser);
+      console.log("name: " + req.query.userName);
       res.render('connect.ejs', {
-        randomUser: randomUser
+        randomUser: randomUser,
+        name: req.query.userName
       });
     })
   })
 
+  app.post('/user', (req, res) => {
+    console.log("user id", req.user._id)
+    db.collection('user').save({pic: req.body.pic}, (err, result) => {
+      if (err) return console.log(err)
+      console.log('saved to list database')
+      res.redirect('/profile')
+         })
+  })
+
   app.get('/chat', function(req, res) {
-    res.render('chat.ejs');
+    res.render('chat.ejs',{
+      userName: req.query.userName
+    });
   })
 
   // app.put('/join', (req, res) => {
@@ -65,6 +87,39 @@ module.exports = function(app, passport, db) {
     });
   });
 
+  //---------------------------------------
+  // IMAGE CODE
+  //---------------------------------------
+
+  var storage = multer.diskStorage({
+      destination: (req, file, cb) => {
+        cb(null, 'public/images/uploads')
+      },
+      filename: (req, file, cb) => {
+        cb(null, file.fieldname + '-' + Date.now() + ".png")
+      }
+  });
+  var upload = multer({storage: storage});
+
+  app.post('/up', upload.single('pic'), (req, res, next) => {
+    // console.log(err)
+    console.log("req.body = " + JSON.stringify(req.body))
+    insertDocuments(db, req, req.body.userId, 'images/uploads/' + req.file.filename, () => {
+        //db.close();
+        //res.json({'message': 'File uploaded successfully'});
+        res.redirect('/profile')
+    });
+  });
+
+  var insertDocuments = function(db, req, userId, filePath, callback) {
+    console.log("userId = " + userId)
+    db.collection('users').findOneAndUpdate(
+      {_id: ObjectId(userId)},
+      { $set: { pic: filePath }},
+      {upsert: true},
+      callback
+    )
+  }
 
 // z ===============================================================
     //

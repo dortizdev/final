@@ -9,3 +9,14 @@
 .form-area {
   margin: 0;
 }
+
+.proImg{
+  height: 300px;
+  width: 300px;
+}
+
+.randomPro{
+  border: 1px solid;
+  margin: 2rem;
+  padding: 2rem;
+}

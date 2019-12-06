@@ -13,6 +13,9 @@ var flash    = require('connect-flash');
 var http = require('http').createServer(app);
 var io = require('socket.io')(http);
 
+var multer = require('multer');
+var ObjectId = require('mongodb').ObjectID;
+
 var morgan       = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser   = require('body-parser');
@@ -26,7 +29,7 @@ var db
 mongoose.connect(configDB.url, (err, database) => {
   if (err) return console.log(err)
   db = database
-  require('./app/routes.js')(app, passport, db);
+  require('./app/routes.js')(app, passport, db, multer, ObjectId);
 }); // connect to our database
 
 //app.listen(port, () => {

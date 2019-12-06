@@ -69,11 +69,14 @@
     </section> -->
     <h1>Connect with a user</h1>
     <div class="col-sm-6">
-      <div style="border: 1px solid; margin 2rem; padding: 2rem;">
+      <div class="randomPro">
+        <% if(randomUser.pic) { %>
+          <img class="proImg" src="<%= randomUser.pic %>" />
+        <% } %>
         <h2>name: <%= randomUser.local.name %></h2>
         <h3>branch: <%= randomUser.local.branch %></h3>
-        <a class="btn btn-success" href="/chat">&#10003;</a>
-        <a class="btn btn-danger" href="/connect">&#x2717;</a>
+        <a class="btn btn-success" href="/chat?userName=<%= name %>">&#10003;</a>
+        <a class="btn btn-danger" href="/connect?userName=<%= name %>">&#x2717;</a>
       </div>
     </div>
 
