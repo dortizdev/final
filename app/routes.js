@@ -58,11 +58,23 @@ module.exports = function(app, passport, db, multer, ObjectId) {
          })
   })
 
-  app.get('/chat', function(req, res) {
-    res.render('chat.ejs',{
-      userName: req.query.userName
-    });
+  app.post('/send', (req, res) => {
+    db.collection('messages').save({name: req.body.name, msg: req.body.msg}, (err, result) => {
+      if (err) return console.log(err)
+      console.log('saved to messages database')
+      res.redirect('/chat.ejs')
+    })
   })
+
+  app.get('/chat', function(req, res) {
+      db.collection('messages').find().toArray((err, result) => {
+        if (err) return console.log(err)
+        res.render('/chat', {
+          user : req.user,
+          messages: result
+        })
+      })
+  });
 
   // app.put('/join', (req, res) => {
   //   db.collection('users')
