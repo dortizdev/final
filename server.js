@@ -10,8 +10,8 @@ var mongoose = require('mongoose');
 var passport = require('passport');
 var flash    = require('connect-flash');
 
-// var http = require('http').createServer(app);
-// var io = require('socket.io')(http);
+var http = require('http').createServer(app);
+var io = require('socket.io')(http);
 
 var multer = require('multer');
 var ObjectId = require('mongodb').ObjectID;
@@ -31,17 +31,6 @@ mongoose.connect(configDB.url, (err, database) => {
   db = database
   require('./app/routes.js')(app, passport, db, multer, ObjectId);
 }); // connect to our database
-
-//app.listen(port, () => {
-    // MongoClient.connect(configDB.url, { useNewUrlParser: true }, (error, client) => {
-    //     if(error) {
-    //         throw error;
-    //     }
-    //     db = client.db(configDB.dbName);
-    //     console.log("Connected to `" + configDB.dbName + "`!");
-    //     require('./app/routes.js')(app, passport, db);
-    // });
-//});
 
 require('./config/passport')(passport); // pass passport for configuration
 
@@ -67,18 +56,16 @@ app.use(flash()); // use connect-flash for flash messages stored in session
 //require('./app/routes.js')(app, passport, db); // load our routes and pass in our app and fully configured passport
 
 // launch ======================================================================
-// io.on('connection', function(socket){
-//   console.log('a user connected');
-//   socket.on('chat message', function(msg){
-//     console.log('message: ' + msg);
-//     io.emit('chat message', msg);
-//   });
-// });
+io.on('connection', function(socket){
+  console.log('a user connected');
+  socket.on('chat message', function(msg){
+    console.log('message: ' + msg);
+    io.emit('chat message', msg);
+  });
+});
 
 // app.listen(port);
 
-app.listen(port, function(){
+http.listen(port, function(){
   console.log(`listening on *${port}`);
 });
-
-// console.log('The magic happens on port ' + port);

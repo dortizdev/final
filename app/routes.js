@@ -44,7 +44,7 @@ module.exports = function(app, passport, db, multer, ObjectId) {
       console.log("name: " + req.query.userName);
       res.render('connect.ejs', {
         randomUser: randomUser,
-        name: req.query.userName
+        userName: req.query.userName
       });
     })
   })
@@ -58,12 +58,12 @@ module.exports = function(app, passport, db, multer, ObjectId) {
          })
   })
 
-  app.post('/send', (req, res) => {
-    db.collection('messages').save({name: req.body.name, msg: req.body.msg}, (err, result) => {
-      if (err) return console.log(err)
-      console.log('saved to messages database')
-      res.redirect('/chat.ejs')
-    })
+  app.get('/chat', function(req, res) {
+    res.render('chat.ejs',{
+      userName: req.query.userName,
+      chatwith: req.query.chatwith,
+      firstMsg: req.query.firstMsg
+    });
   })
 
   app.get('/chat', function(req, res) {
