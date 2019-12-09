@@ -23,7 +23,7 @@ var session      = require('express-session');
 
 var configDB = require('./config/database.js');
 
-const db = mongoose.connection
+var db
 
 // configuration ===============================================================
 mongoose.connect(configDB.url, (err, database) => {
@@ -42,15 +42,6 @@ mongoose.connect(configDB.url, (err, database) => {
     //     require('./app/routes.js')(app, passport, db);
     // });
 //});
-
-
-db.once('open', _ => {
-  console.log('Database connected:', url)
-})
-
-db.on('error', err => {
-  console.error('connection error:', err)
-})
 
 require('./config/passport')(passport); // pass passport for configuration
 
