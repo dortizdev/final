@@ -5,15 +5,17 @@
 }
 
 body {
-  font: 13px Helvetica, Arial;
+  font: 10px Helvetica, Arial;
 }
 
-form {
+.chat {
   background: #000;
   padding: 3px;
   position: fixed;
-  bottom: 0;
-  width: 70%;
+  bottom: 50px;
+  width: 80%;
+  margin-left: 10%;
+  font-size: 1.4rem;
 }
 
 form input {
@@ -23,7 +25,7 @@ form input {
   margin-right: .5%;
 }
 
-form button {
+.chatSend {
   width: 9%;
   background: rgb(130, 224, 255);
   border: none;

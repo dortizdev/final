@@ -23,7 +23,7 @@ var session      = require('express-session');
 
 var configDB = require('./config/database.js');
 
-var db
+const db = mongoose.connection
 
 // configuration ===============================================================
 mongoose.connect(configDB.url, (err, database) => {
@@ -31,6 +31,26 @@ mongoose.connect(configDB.url, (err, database) => {
   db = database
   require('./app/routes.js')(app, passport, db, multer, ObjectId);
 }); // connect to our database
+
+//app.listen(port, () => {
+    // MongoClient.connect(configDB.url, { useNewUrlParser: true }, (error, client) => {
+    //     if(error) {
+    //         throw error;
+    //     }
+    //     db = client.db(configDB.dbName);
+    //     console.log("Connected to `" + configDB.dbName + "`!");
+    //     require('./app/routes.js')(app, passport, db);
+    // });
+//});
+
+
+db.once('open', _ => {
+  console.log('Database connected:', url)
+})
+
+db.on('error', err => {
+  console.error('connection error:', err)
+})
 
 require('./config/passport')(passport); // pass passport for configuration
 
@@ -69,3 +89,5 @@ io.on('connection', function(socket){
 http.listen(port, function(){
   console.log(`listening on *${port}`);
 });
+
+// console.log('The magic happens on port ' + port);
