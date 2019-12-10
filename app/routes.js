@@ -17,14 +17,38 @@ module.exports = function(app, passport, db, multer, ObjectId) {
           user: userProfiles[0]
         })
       })
-      /*
-        db.collection('final').find({personPost: userID}).toArray((err, result) => {
-          if (err) return console.log(err)
-          res.render('profile.ejs', {
-            user : req.user,
-          })
+    });
+
+
+    // SEARCH FUNCTION =============================
+    // app.get('/search', function(req, res){
+    //   db.collection("users").find({$and: [
+    //     {age: {$gt: req.query.ageMin}},
+    //     {age: {$lt: req.query.ageMax}}
+    //     ]})
+    //     if (err) return console.log(err)
+    //     console.log()
+    // })
+
+    app.post('/search', isLoggedIn, function(req, res) {
+      let filter = {$and: [
+        {"local.age": {$gte: req.body.ageMin}},
+        {"local.age": {$lte: req.body.ageMax}}
+        ]}
+        if(req.body.branch){
+          filter = {
+            "local.branch": req.body.branch
+          }
+        }
+        console.log("searchFilter: " + JSON.stringify(filter))
+      db.collection("users").find(filter).toArray((err, userProfiles) => {
+        if (err) return console.log(err)
+        console.log("user = " + JSON.stringify(userProfiles))
+        res.render('search.ejs',{
+          userProfiles: userProfiles,
+          userName: req.user.local.name
         })
-        */
+      })
     });
 
     // LOGOUT ==============================

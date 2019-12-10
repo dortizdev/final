@@ -47,10 +47,6 @@
                 <a href=#connect.ejs>Connect</a>
               </nav>
               <div class="menu-bar"><span class="lnr lnr-menu"></span></div>
-              <form class="searchForm"action="/search">
-                <input class="search" type="text" method="POST" placeholder="Search" name="search">
-                <button class="searchButton" type="submit"><i class="fa fa-search"></i></button>
-              </form>
             </div>
           </div>
         </div>
@@ -60,27 +56,30 @@
     <!-- End Header Area -->
 
     <h1 class="pageTitle">Profile Page</h1>
-    <h2>Welcome, <%= user.local.name %>!</h2>
-    <div class="profileInfo">
-      <img class="proImg" src="<%= user.pic %>"/>
-      <h3>Branch: <%= user.local.branch %></h3>
-      <h3>Age: <%= user.local.age %></h3>
-      <h3>Gender: <%= user.local.gender %></h3>
-      <h3>Location: <%= user.local.city %></h3>
-      <fieldset>
-        <legend>Add a Picture</legend>
-        <form class= "addPic" action="/up" enctype="multipart/form-data" method="POST">
-          <input type="file" placeholder="picture" name="pic">
-          <input type="hidden" name="userId" value=<%= user._id %>>
-          <button type="submit">Submit</button>
-        </form>
-      </fieldset>
-    </div>
-    <div class="proButtons">
-      <a href="/logout" class="primary-btn">Log out<span class="lnr lnr-arrow-right"></span></a>
-      <a href="/connect?userName=<%= user.local.name %>" class="primary-btn">Connect with others<span class="lnr lnr-arrow-right"></span></a>
-      <a href="/cancel" id="cancel" class="primary-btn">Delete Account<span class="lnr lnr-arrow-right"></span></a>
-    </div>
+
+    <section>
+      <h2>Welcome, <%= user.local.name %>!</h2>
+      <div class="profileInfo">
+        <img class="proImg" src="<%= user.pic %>"/>
+        <h3>Branch: <%= user.local.branch %></h3>
+        <h3>Age: <%= user.local.age %></h3>
+        <h3>Gender: <%= user.local.gender %></h3>
+        <h3>Location: <%= user.local.city %></h3>
+        <fieldset class="picField">
+          <legend>Add a Picture</legend>
+          <form class= "addPic" action="/up" enctype="multipart/form-data" method="POST">
+            <input type="file" placeholder="picture" name="pic">
+            <input type="hidden" name="userId" value=<%= user._id %>>
+            <button type="submit">Submit</button>
+          </form>
+        </fieldset>
+      </div>
+      <div class="proButtons">
+        <a href="/logout" class="primary-btn">Log out<span class="lnr lnr-arrow-right"></span></a>
+        <a href="/connect?userName=<%= user.local.name %>" class="primary-btn">Connect with others<span class="lnr lnr-arrow-right"></span></a>
+        <a href="/cancel" id="cancel" class="primary-btn">Delete Account<span class="lnr lnr-arrow-right"></span></a>
+      </div>
+    </section>
 
     <!-- start footer Area -->
     <footer class="footer-area section-gap">
