@@ -56,11 +56,12 @@
     <!-- End Header Area -->
 
     <h1 class="pageTitle">Profile Page</h1>
-
-    <section>
-      <h2>Welcome, <%= user.local.name %>!</h2>
+    <h2>Welcome, <%= user.local.name %>!</h2>
+    <section class="area">
       <div class="profileInfo">
+        <% if(user.pic) { %>
         <img class="proImg" src="<%= user.pic %>"/>
+        <% } %>
         <h3>Branch: <%= user.local.branch %></h3>
         <h3>Age: <%= user.local.age %></h3>
         <h3>Gender: <%= user.local.gender %></h3>

@@ -13,6 +13,7 @@
 .proImg{
   height: 300px;
   width: 300px;
+  margin-bottom: 10px;
 }
 
 .randomPro{
@@ -21,9 +22,18 @@
   padding: 2rem;
 }
 
-.profileInfo, .proButtons, h2{
+.profileInfo, h2{
   margin-left: 3%;
   margin-bottom: 20px;
+}
+
+.proButtons{
+  margin: 5rem;
+  padding: 2rem;
+}
+
+.proButtons a{
+  margin-left: 2rem;
 }
 
 .addPic{
@@ -48,6 +58,28 @@
   margin-bottom: 20px;
 }
 
+.proSection{
+  margin-bottom: 40px;
+}
+
+.area{
+  display: flex;
+  flex-direction: row;
+}
+
+.diffSearches{
+  margin: 2rem;
+  padding: 2rem;
+}
+
 h3{
   margin-bottom: 5px;
+}
+
+legend{
+  margin-left: 1%
+}
+
+select{
+  display: inline-block;
 }

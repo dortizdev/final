@@ -57,21 +57,50 @@
     <!-- Start Banner Area -->
 
     <h1 class="pageTitle">Connect With A User</h1>
-    <div class="col-sm-6">
       <div class="randomPro">
         <% for(var i=0; i<userProfiles.length; i++) {%>
-          <% if(userProfiles[i].pic) { %>
-            <img class="proImg" src="<%= userProfiles[i].pic %>" />
-          <% } %>
-          <h2>Name:   <%= userProfiles[i].local.name %></h2>
-          <h3>Age:    <%= userProfiles[i].local.age %></h3>
-          <h3>Branch: <%= userProfiles[i].local.branch %></h3>
-          <h3>City:   <%= userProfiles[i].local.city %></h3>
-          <a class="btn btn-success" href="/chat?userName=<%= userName %>&chatwith=<%= userProfiles[i].local.name %>">&#10003;</a>
-          <a class="btn btn-danger" href="/connect?userName=<%= userName %>">&#x2717;</a>
+          <div class="proSection">
+            <% if(userProfiles[i].pic) { %>
+              <img class="proImg" src="<%= userProfiles[i].pic %>" />
+            <% } %>
+            <h3>Name:   <%= userProfiles[i].local.name %></h2>
+            <h3>Age:    <%= userProfiles[i].local.age %></h3>
+            <h3>Branch: <%= userProfiles[i].local.branch %></h3>
+            <h3>City:   <%= userProfiles[i].local.city %></h3>
+            <a class="btn btn-success" href="/chat?userName=<%= userName %>&chatwith=<%= userProfiles[i].local.name %>">&#10003;</a>
+            <a class="btn btn-danger" href="/connect?userName=<%= userName %>">&#x2717;</a>
+          </div>
         <% } %>
       </div>
-    </div>
+
+    <section class="diffSearches">
+      <div class="searching">
+      <fieldset class="ageSearch">
+        <legend>Search by Age</legend>
+        <form class="searchForm" method="POST" action="/search">
+          <input class="search" type="text" placeholder="Minimum Age" name="ageMin">
+          <input class="search" type="text" placeholder="Maximum Age" name="ageMax">
+          <button class="searchButton" type="submit"><i class="fa fa-search"></i></button>
+        </form>
+      </fieldset>
+      </div>
+
+      <div class="searching">
+      <fieldset class="branchSearch">
+        <legend>Search by Branch</legend>
+        <form class="searchForm" method="POST" action="/search">
+          <select class="" name="branch">
+            <option>Air Force</option>
+            <option>Army</option>
+            <option>Coast Guard</option>
+            <option>Navy</option>
+            <option>Marines</option>
+          </select>
+          <button class="searchButton" type="submit"><i class="fa fa-search"></i></button>
+        </form>
+      </fieldset>
+      </div>
+    </section>
 
     <footer class="footer-area section-gap">
       <div class="container">
