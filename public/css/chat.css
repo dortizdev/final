@@ -8,6 +8,11 @@ body {
   font: 10px Helvetica, Arial;
 }
 
+h2{
+  margin-top: 2%;
+  margin-left: 2%;
+}
+
 .chat {
   background: #000;
   padding: 3px;
@@ -40,6 +45,7 @@ form input {
 
 #messages li {
   padding: 5px 10px;
+  font-size: 2rem;
 }
 
 #messages li:nth-child(odd) {

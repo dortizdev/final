@@ -44,7 +44,7 @@
                 <a href="/">Home</a>
                 <a href="/login">Log In</a>
                 <a href="/signup">Sign Up</a>
-                <a href="#connect.ejs">Connect</a>
+                <!-- <a href="#connect.ejs">Connect</a> -->
               </nav>
               <div class="menu-bar"><span class="lnr lnr-menu"></span></div>
             </div>
@@ -57,7 +57,9 @@
     <!-- Start Banner Area -->
 
     <h1 class="pageTitle">Connect With A User</h1>
+    <section class="area">
       <div class="randomPro">
+        <h2>Search Results</h2>
         <% for(var i=0; i<userProfiles.length; i++) {%>
           <div class="proSection">
             <% if(userProfiles[i].pic) { %>
@@ -73,33 +75,34 @@
         <% } %>
       </div>
 
-    <section class="diffSearches">
-      <div class="searching">
-      <fieldset class="ageSearch">
-        <legend>Search by Age</legend>
-        <form class="searchForm" method="POST" action="/search">
-          <input class="search" type="text" placeholder="Minimum Age" name="ageMin">
-          <input class="search" type="text" placeholder="Maximum Age" name="ageMax">
-          <button class="searchButton" type="submit"><i class="fa fa-search"></i></button>
-        </form>
-      </fieldset>
-      </div>
+      <section class="diffSearches">
+        <div class="searching">
+        <fieldset class="ageSearch">
+          <legend>Search by Age</legend>
+          <form class="searchForm" method="POST" action="/search">
+            <input class="search" type="text" placeholder="Minimum Age" name="ageMin">
+            <input class="search" type="text" placeholder="Maximum Age" name="ageMax">
+            <button class="searchButton" type="submit"><i class="fa fa-search"></i></button>
+          </form>
+        </fieldset>
+        </div>
 
-      <div class="searching">
-      <fieldset class="branchSearch">
-        <legend>Search by Branch</legend>
-        <form class="searchForm" method="POST" action="/search">
-          <select class="" name="branch">
-            <option>Air Force</option>
-            <option>Army</option>
-            <option>Coast Guard</option>
-            <option>Navy</option>
-            <option>Marines</option>
-          </select>
-          <button class="searchButton" type="submit"><i class="fa fa-search"></i></button>
-        </form>
-      </fieldset>
-      </div>
+        <div class="searching">
+          <fieldset class="branchSearch">
+            <legend>Search by Branch</legend>
+            <form class="searchForm" method="POST" action="/search">
+              <select class="" name="branch">
+                <option>Air Force</option>
+                <option>Army</option>
+                <option>Coast Guard</option>
+                <option>Navy</option>
+                <option>Marines</option>
+              </select>
+              <button class="searchButton" type="submit"><i class="fa fa-search"></i></button>
+            </form>
+          </fieldset>
+        </div>
+      </section>
     </section>
 
     <footer class="footer-area section-gap">
@@ -109,7 +112,7 @@
             <div class="single-footer-widget">
               <h6>About Us</h6>
               <p>
-                Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore dolore magna aliqua.
+                Created as a way to get veterans to connect together and help eachother as they transition back into society
               </p>
             </div>
           </div>
