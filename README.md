@@ -9,7 +9,7 @@ An application that allows veterans of the US armed forces connect and help each
 Landing page and profile uses Bootstrap template. Used Passport and Express to display random users to allow other to connect and communicate. Socket.io was used as the chat box. The script and routing was needed on multiple ejs files to pull user into chat if they click Okay on notification that pops up when other user sends them a chat. Search function was also implemented to find users based on age or branch.
 
 ## Lessons Learned
-Learned more about altering schemas to input data to database. Had to determine how to route users to the same chat, initially was like a open chat room, instead of a private one.
+Learned more about altering schemas to input data to database. Had to determine how to route users to the same chat, initially was like an open chat room, instead of a private one.
 
 
 ## Installation
